@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Coin Toss · HEAD / TAIL · Text Images</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      user-select: none;
+    }
+
+    body {
+      background: linear-gradient(145deg, #1f2b3c 0%, #0f1a27 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Segoe UI', 'Poppins', system-ui, -apple-system, 'Roboto', sans-serif;
+      padding: 1.5rem;
+    }
+
+    .toss-card {
+      max-width: 540px;
+      width: 100%;
+      background: #fffcf4;
+      border-radius: 2.8rem;
+      box-shadow: 0 30px 40px -12px rgba(0, 0, 0, 0.5);
+      padding: 2rem 1.5rem 2rem;
+      text-align: center;
+      border: 1px solid #ffdfaa;
+    }
+
+    .title h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #ffb347, #c9772e);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sub {
+      font-size: 0.75rem;
+      color: #a17b50;
+      background: #f7eedb;
+      display: inline-block;
+      padding: 0.2rem 1rem;
+      border-radius: 30px;
+      margin-top: 6px;
+    }
+
+    .coin-area {
+      margin: 1.2rem 0 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .coin {
+      width: 210px;
+      height: 210px;
+      background: #f7eac5;
+      border-radius: 50%;
+      box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3), inset 0 -2px 0 rgba(0, 0, 0, 0.05), inset 0 2px 8px rgba(255, 255, 200, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .coin-image {
+      width: 88%;
+      height: 88%;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+    }
+
+    /* Flip animation */
+    .flip-animation {
+      animation: coinFlip 0.5s cubic-bezier(0.23, 1, 0.32, 1) 1;
+    }
+
+    @keyframes coinFlip {
+      0% { transform: rotateY(0deg); }
+      50% { transform: rotateY(180deg); }
+      100% { transform: rotateY(360deg); }
+    }
+
+    .result-text {
+      margin: 1rem 0 1.2rem;
+      background: #fef5e6;
+      border-radius: 60px;
+      padding: 0.7rem 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.03), 0 4px 8px rgba(0,0,0,0.05);
+    }
+
+    .result-label {
+      font-size: 1.1rem;
+      background: #e9ddcb;
+      padding: 0.2rem 1rem;
+      border-radius: 30px;
+      color: #7b572f;
+      font-weight: 600;
+    }
+
+    .result-value {
+      font-size: 2rem;
+      font-weight: 800;
+      background: linear-gradient(145deg, #b5692a, #984c14);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .toss-btn {
+      background: radial-gradient(circle at 30% 20%, #ffcf7a, #e09d32);
+      border: none;
+      width: 80%;
+      padding: 1rem 0;
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: #2d2418;
+      border-radius: 80px;
+      cursor: pointer;
+      transition: 0.1s linear;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 0.4rem;
+    }
+
+    .toss-btn:active {
+      transform: scale(0.96);
+    }
+
+    .toss-btn:disabled {
+      opacity: 0.7;
+      cursor: wait;
+    }
+
+    .footer-note {
+      margin-top: 1.4rem;
+      font-size: 0.7rem;
+      color: #b3864a;
+      background: #fff7e8;
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0.2rem 1rem;
+      border-radius: 30px;
+    }
+
+    @media (max-width: 500px) {
+      .coin { width: 170px; height: 170px; }
+      .result-value { font-size: 1.6rem; }
+      .toss-btn { width: 90%; font-size: 1.1rem; }
+    }
+    @media (max-width: 400px) {
+      .coin { width: 150px; height: 150px; }
+    }
+  </style>
+</head>
+<body>
+<div class="toss-card">
+  <div class="title">
+    <h1>🪙 Coin Toss</h1>
+    <div class="sub">HEAD / TAIL — pure text images</div>
+  </div>
+
+  <div class="coin-area">
+    <div class="coin" id="coinElement">
+      <img id="coinImg" class="coin-image" alt="coin side" />
+    </div>
+  </div>
+
+  <div class="result-text">
+    <span class="result-label">🎲 RESULT</span>
+    <span class="result-value" id="resultMessage">Tap to toss</span>
+  </div>
+
+  <button class="toss-btn" id="tossButton">
+    <span>🪙</span> TOSS COIN <span>🪙</span>
+  </button>
+  <div class="footer-note">
+    👆 click — random HEAD or TAIL with flip animation
+  </div>
+</div>
+
+<script>
+  // ============================================================
+  // SIMPLE TEXT IMAGES: just "HEAD" and "TAIL" on golden circles
+  // Clear, bold, and exactly what you asked for.
+  // ============================================================
+  const HEAD_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="48" fill="#F5D742" stroke="#C47E2E" stroke-width="2.5"/>
+    <text x="50" y="68" font-size="32" text-anchor="middle" fill="#6B3A1A" font-weight="900" font-family="'Segoe UI', 'Poppins', sans-serif" letter-spacing="2">HEAD</text>
+  </svg>`;
+
+  const TAIL_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="48" fill="#F0CF8C" stroke="#C28234" stroke-width="2.5"/>
+    <text x="50" y="68" font-size="32" text-anchor="middle" fill="#7A3E12" font-weight="900" font-family="'Segoe UI', 'Poppins', sans-serif" letter-spacing="2">TAIL</text>
+  </svg>`;
+
+  function svgToDataURL(svg) {
+    return `data:image/svg+xml,${encodeURIComponent(svg)}`;
+  }
+
+  const HEAD_IMG = svgToDataURL(HEAD_SVG);
+  const TAIL_IMG = svgToDataURL(TAIL_SVG);
+
+  const coinImg = document.getElementById('coinImg');
+  const resultSpan = document.getElementById('resultMessage');
+  const tossBtn = document.getElementById('tossButton');
+  const coinElement = document.getElementById('coinElement');
+
+  let isFlipping = false;
+
+  function setInitial() {
+    coinImg.src = HEAD_IMG;
+    resultSpan.textContent = "Ready?";
+  }
+
+  function animateFlip() {
+    coinElement.classList.add('flip-animation');
+    setTimeout(() => coinElement.classList.remove('flip-animation'), 500);
+  }
+
+  function updateResult(side) {
+    if (side === 'head') {
+      coinImg.src = HEAD_IMG;
+      resultSpan.innerHTML = "👑 HEAD 👑";
+    } else {
+      coinImg.src = TAIL_IMG;
+      resultSpan.innerHTML = "🪶 TAIL 🪶";
+    }
+  }
+
+  function tossCoin() {
+    if (isFlipping) return;
+    isFlipping = true;
+    tossBtn.disabled = true;
+
+    const isHead = Math.random() < 0.5;
+    const result = isHead ? 'head' : 'tail';
+
+    animateFlip();
+
+    setTimeout(() => {
+      updateResult(result);
+      isFlipping = false;
+      tossBtn.disabled = false;
+    }, 480);
+  }
+
+  tossBtn.addEventListener('click', tossCoin);
+  window.addEventListener('keydown', (e) => {
+    if ((e.code === 'Space' || e.code === 'KeyT') && !isFlipping) {
+      e.preventDefault();
+      tossCoin();
+    }
+  });
+
+  setInitial();
+</script>
+</body>
+</html>
